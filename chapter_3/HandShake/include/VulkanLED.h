@@ -48,6 +48,7 @@ public:
 	std::vector<LayerProperties>		layerPropertyList;
 
 	// Instance/global layer
+	// 查询实例和全局的层数
 	VkResult getInstanceLayerProperties();
 	
 	// Global extensions

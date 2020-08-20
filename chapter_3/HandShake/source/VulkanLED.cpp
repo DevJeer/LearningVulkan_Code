@@ -37,7 +37,7 @@ VulkanLayerAndExtension::~VulkanLayerAndExtension()
 VkResult VulkanLayerAndExtension::getInstanceLayerProperties()
 {
 	uint32_t						instanceLayerCount;		// Stores number of layers supported by instance
-	std::vector<VkLayerProperties>	layerProperties;		// Vector to store layer properties
+	std::vector<VkLayerProperties>	layerProperties;		// ±£´ælayer properties Vector to store layer properties
 	VkResult						result;					// Variable to check Vulkan API result status
 
 	// Query all the layers
