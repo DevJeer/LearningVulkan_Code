@@ -36,8 +36,11 @@ VulkanLayerAndExtension::~VulkanLayerAndExtension()
 
 VkResult VulkanLayerAndExtension::getInstanceLayerProperties()
 {
+	//存储实例层的数目
 	uint32_t						instanceLayerCount;		// Stores number of layers supported by instance
+	//存储层的属性
 	std::vector<VkLayerProperties>	layerProperties;		// 保存layer properties Vector to store layer properties
+	//检查vulkan执行的结果
 	VkResult						result;					// Variable to check Vulkan API result status
 
 	// Query all the layers
@@ -51,6 +54,7 @@ VkResult VulkanLayerAndExtension::getInstanceLayerProperties()
 			return VK_INCOMPLETE; // return fail
 
 		layerProperties.resize(instanceLayerCount);
+		//获取所有的实例层属性
 		result = vkEnumerateInstanceLayerProperties(&instanceLayerCount, layerProperties.data());
 	} while (result == VK_INCOMPLETE);
 
@@ -64,6 +68,7 @@ VkResult VulkanLayerAndExtension::getInstanceLayerProperties()
 		layerProps.properties = globalLayerProp;
 
 		// Get Instance level extensions for corresponding layer properties
+		//获取实例对应层的扩展
 		result = getExtensionProperties(layerProps);
 
 		if (result){
@@ -72,6 +77,7 @@ VkResult VulkanLayerAndExtension::getInstanceLayerProperties()
 
 		layerPropertyList.push_back(layerProps);
 		// Print extension name for each instance layer
+		//打印每个实例层上的扩展
 		for (auto j : layerProps.extensions) {
 			std::cout << "\t\t|\n\t\t|---[Layer Extension]--> " << j.extensionName << "\n";
 		}
