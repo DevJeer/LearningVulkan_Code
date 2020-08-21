@@ -26,11 +26,13 @@
 #include "Headers.h"
 #include "VulkanApplication.h"
 
+//启用的扩展
 std::vector<const char *> instanceExtensionNames = {
 	VK_KHR_SURFACE_EXTENSION_NAME,
 	VK_KHR_WIN32_SURFACE_EXTENSION_NAME
 };
 
+//启用的层
 std::vector<const char *> layerNames = {
 	"VK_LAYER_LUNARG_api_dump"
 };

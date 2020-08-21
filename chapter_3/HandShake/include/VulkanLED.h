@@ -39,21 +39,24 @@ public:
 	/******* LAYER AND EXTENSION MEMBER FUNCTION AND VARAIBLES *******/
 	
 	// List of layer names requested by the application.
+	// APP中所需用到的层的名称列表
 	std::vector<const char *>			appRequestedLayerNames;
 	
 	// List of extension names requested by the application.
+	// APP中需要用到的扩展的名称列表
 	std::vector<const char *>			appRequestedExtensionNames;
 	
 	// Layers and corresponding extension list
+	// 层属性和扩展属性
 	std::vector<LayerProperties>		layerPropertyList;
 
 	// Instance/global layer
 	// 查询实例和全局的层数
 	VkResult getInstanceLayerProperties();
 	
-	// Global extensions
+	// Global extensions  全局扩展
 	VkResult getExtensionProperties(LayerProperties &layerProps, VkPhysicalDevice* gpu = NULL);
 
-	// Device based extensions
+	// Device based extensions  基于设备的扩展
 	VkResult getDeviceExtensionProperties(VkPhysicalDevice* gpu);
 };

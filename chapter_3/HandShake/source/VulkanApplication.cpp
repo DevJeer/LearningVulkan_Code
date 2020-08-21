@@ -37,6 +37,7 @@ extern std::vector<const char *> deviceExtensionNames;
 VulkanApplication::VulkanApplication() 
 {
 	// At application start up, enumerate instance layers
+	// 当APP启动的时候，枚举实例层
 	instanceObj.layerExtension.getInstanceLayerProperties();
 
 	deviceObj = NULL;
@@ -49,6 +50,7 @@ VulkanApplication::~VulkanApplication()
 
 // Returns the Single ton object of VulkanApplication
 VulkanApplication* VulkanApplication::GetInstance(){
+	//只调用一次
     std::call_once(onlyOnce, [](){instance.reset(new VulkanApplication()); });
     return instance.get();
 }
@@ -81,35 +83,45 @@ VkResult VulkanApplication::handShakeWithDevice(VkPhysicalDevice* gpu, std::vect
 	}
 	
 	// Print the devices available layer and their extension 
+	// 打印设备端可用的层和扩展
 	deviceObj->layerExtension.getDeviceExtensionProperties(gpu);
 
 	// Get the physical device or GPU properties
+	// 获取物理设备和GPU的属性
 	vkGetPhysicalDeviceProperties(*gpu, &deviceObj->gpuProps);
 
 	// Get the memory properties from the physical device or GPU.
+	// 获取物理设备和GPU的内存属性
 	vkGetPhysicalDeviceMemoryProperties(*gpu, &deviceObj->memoryProperties);
 
 	// Query the availabe queues on the physical device and their properties.
+	// 查询可用的队列并且返回他们的属性
 	deviceObj->getPhysicalDeviceQueuesAndProperties();
 
 	// Retrive the queue which support graphics pipeline.
+	// 返回支持图形渲染的队列
 	deviceObj->getGrahicsQueueHandle();
 
 	// Create Logical Device, ensure that this device is connecte to graphics queue
+	// 创建逻辑设备，确保设备已经关联到图形队列
 	return deviceObj->createDevice(layers, extensions);
 }
 
 VkResult VulkanApplication::enumeratePhysicalDevices(std::vector<VkPhysicalDevice>& gpuList)
 {
+	// gpu设备的数量
 	uint32_t gpuDeviceCount;
 
+	// 获取gpu设备的数量
 	VkResult result = vkEnumeratePhysicalDevices(instanceObj.instance, &gpuDeviceCount, NULL);
 	assert(result == VK_SUCCESS);
 
 	assert(gpuDeviceCount);
 
+	// 给gpu对象分配空间
 	gpuList.resize(gpuDeviceCount);
 
+	// 获取物理设备对象
 	result = vkEnumeratePhysicalDevices(instanceObj.instance, &gpuDeviceCount, gpuList.data());
 	assert(result == VK_SUCCESS);
 
@@ -127,6 +139,7 @@ void VulkanApplication::initialize()
 	enumeratePhysicalDevices(gpuList);
 
 	// This example use only one device which is available first.
+	// 创建device和queue并且返回可用的队列
 	if (gpuList.size() > 0) {
 		handShakeWithDevice(&gpuList[0], layerNames, deviceExtensionNames);
 	}

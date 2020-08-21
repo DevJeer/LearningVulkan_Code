@@ -55,11 +55,15 @@ public:
 
 private:
 	// Create the Vulkan instance object
+	// 创建vulkan instance
 	VkResult createVulkanInstance(std::vector<const char *>& layers, std::vector<const char *>& extensions,  const char* applicationName);
+	// 处理设备
 	VkResult handShakeWithDevice(VkPhysicalDevice* gpu, std::vector<const char *>& layers, std::vector<const char *>& extensions);
+	//得到可用的物理设备
 	VkResult enumeratePhysicalDevices(std::vector<VkPhysicalDevice>& gpus);
 
 public:
+	// vulkan实例对象
     VulkanInstance  instanceObj;	// Vulkan Instance object
 
 	VulkanDevice*      deviceObj;

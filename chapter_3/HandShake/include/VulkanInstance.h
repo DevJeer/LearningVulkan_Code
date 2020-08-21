@@ -43,5 +43,7 @@ public:
 public:
 	// VulkanInstance public functions
 	VkResult createInstance(std::vector<const char *>& layers, std::vector<const char *>& extensions, const char* applicationName);
+
+	// destory instance function
 	void destroyInstance();
 };

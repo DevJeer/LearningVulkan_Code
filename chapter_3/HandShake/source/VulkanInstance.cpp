@@ -27,6 +27,7 @@
 
 VkResult VulkanInstance::createInstance(std::vector<const char *>& layers, std::vector<const char *>& extensionNames, char const*const appName)
 {
+	// 设置实例相关的层和扩展的信息
 	layerExtension.appRequestedExtensionNames	= extensionNames;
 	layerExtension.appRequestedLayerNames		= layers;
 	
@@ -49,10 +50,12 @@ VkResult VulkanInstance::createInstance(std::vector<const char *>& layers, std::
 	instInfo.pApplicationInfo		= &appInfo;
 
 	// Specify the list of layer name to be enabled.
+	// p-开头表示指针（）
 	instInfo.enabledLayerCount		= (uint32_t)layers.size();
 	instInfo.ppEnabledLayerNames	= layers.size() ? layers.data() : NULL;
 
-	// Specify the list of extensions to be used in the application.
+	// Specify the list of extensions to be used in the application. 
+	// 这里指的是实例层面上的扩展
 	instInfo.enabledExtensionCount	= (uint32_t)extensionNames.size();
 	instInfo.ppEnabledExtensionNames = extensionNames.size() ? extensionNames.data() : NULL;
 
@@ -64,5 +67,6 @@ VkResult VulkanInstance::createInstance(std::vector<const char *>& layers, std::
 
 void VulkanInstance::destroyInstance()
 {
+	//销毁实例
 	vkDestroyInstance(instance, NULL);
 }

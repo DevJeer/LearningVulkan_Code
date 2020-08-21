@@ -44,7 +44,10 @@ VkResult VulkanDevice::createDevice(std::vector<const char *>& layers, std::vect
 	layerExtension.appRequestedExtensionNames	= extensions;
 
 	// Create Device with available queue information.
+	// 创建队列使用到的信息
 
+	// 创建对象的信息
+	// 创建队列的信息
 	VkResult result;
 	float queuePriorities[1]			= { 0.0 };
 	VkDeviceQueueCreateInfo queueInfo	= {};
@@ -74,12 +77,15 @@ VkResult VulkanDevice::createDevice(std::vector<const char *>& layers, std::vect
 void VulkanDevice::getPhysicalDeviceQueuesAndProperties()
 {
 	// Query queue families count with pass NULL as second parameter.
+	// 获取队列族的数量
 	vkGetPhysicalDeviceQueueFamilyProperties(*gpu, &queueFamilyCount, NULL);
 	
 	// Allocate space to accomodate Queue properties.
+	// 给队列族分配内存
 	queueFamilyProps.resize(queueFamilyCount);
 
 	// Get queue family properties
+	// 获取队列族的属性
 	vkGetPhysicalDeviceQueueFamilyProperties(*gpu, &queueFamilyCount, queueFamilyProps.data());
 }
 
@@ -96,6 +102,7 @@ uint32_t VulkanDevice::getGrahicsQueueHandle()
 
 	bool found = false;
 	// 1. Iterate number of Queues supported by the Physical device
+	// 迭代查找物理设备所支持的所有队列
 	for (unsigned int i = 0; i < queueFamilyCount; i++){
 		// 2. Get the Graphics Queue type
 		//		There could be 4 Queue type or Queue families supported by physical device - 
@@ -104,8 +111,10 @@ uint32_t VulkanDevice::getGrahicsQueueHandle()
 		//		DMA/Transfer Queue	- VK_QUEUE_TRANSFER_BIT
 		//		Spare memory		- VK_QUEUE_SPARSE_BINDING_BIT
 
+		// 获取一个图形队列的属性
 		if (queueFamilyProps[i].queueFlags & VK_QUEUE_GRAPHICS_BIT){
 			// 3. Get the handle/index ID of graphics queue family.
+			// 获取图形队列族的句柄 / 索引ID
 			found				= true;
 			graphicsQueueIndex	= i;
 			break;

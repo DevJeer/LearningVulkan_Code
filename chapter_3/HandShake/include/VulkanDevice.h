@@ -43,6 +43,7 @@ public:
 	~VulkanDevice();
 
 public:
+	// 设备相关的成员变量
     VkDevice							device;		// Logical device
 	VkPhysicalDevice*					gpu;		// Physical device
 	VkPhysicalDeviceProperties			gpuProps;	// Physical device attributes
@@ -50,6 +51,7 @@ public:
 
 public:
 	// Queue
+	// 队列相关的属性
 	VkQueue									queue;							// Vulkan Queues object
 	std::vector<VkQueueFamilyProperties>	queueFamilyProps;				// Store all queue families exposed by the physical device. attributes
 	uint32_t								graphicsQueueIndex;				// Stores graphics queue index
@@ -57,6 +59,7 @@ public:
 	uint32_t								queueFamilyCount;				// Device specificc layer and extensions
 
 	// Layer and extensions
+	// 设备相关的扩展
 	VulkanLayerAndExtension		layerExtension;
 
 public:

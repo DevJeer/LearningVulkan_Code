@@ -59,6 +59,7 @@ VkResult VulkanLayerAndExtension::getInstanceLayerProperties()
 	} while (result == VK_INCOMPLETE);
 
 	// Query all the extensions for each layer and store it.
+	// 查询所有层上的扩展
 	std::cout << "\nInstanced Layers" << std::endl;
 	std::cout << "===================" << std::endl;
 	for (auto globalLayerProp: layerProperties) {
@@ -102,6 +103,7 @@ VkResult VulkanLayerAndExtension::getDeviceExtensionProperties(VkPhysicalDevice*
 		LayerProperties layerProps;
 		layerProps.properties = globalLayerProp.properties;
 
+		// 获取设备扩展
 		if (result = getExtensionProperties(layerProps, gpu))
 			continue;
 
@@ -124,6 +126,7 @@ VkResult VulkanLayerAndExtension::getDeviceExtensionProperties(VkPhysicalDevice*
 // and device level. Pass a valid physical device
 // pointer to retrieve device level extensions, otherwise
 // use NULL to retrieve extension specific to instance level.
+// 获取实例 / 设备上的扩展
 VkResult VulkanLayerAndExtension::getExtensionProperties(LayerProperties &layerProps, VkPhysicalDevice* gpu)
 {
 	uint32_t	extensionCount;								 // Stores number of extension per layer
