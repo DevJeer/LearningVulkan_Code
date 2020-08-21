@@ -350,3 +350,5 @@ MigrationBackup/
 .ionide/
 chapter_3/HandShake/build/
 chapter_3/HandShake/binaries/3_0_DeviceHandshake.exe
+chapter_4/DebugVulkan/build/
+chapter_4/DebugVulkan/binaries/4_0_DebugVulkan.exe

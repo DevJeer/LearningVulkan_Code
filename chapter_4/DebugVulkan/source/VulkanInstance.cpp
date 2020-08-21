@@ -44,7 +44,7 @@ VkResult VulkanInstance::createInstance(std::vector<const char *>& layers, std::
 	// Define the Vulkan instance create info structure 
 	VkInstanceCreateInfo instInfo	= {};
 	instInfo.sType					= VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO;
-	instInfo.pNext					= &layerExtension.dbgReportCreateInfo;
+	instInfo.pNext					= &layerExtension.dbgReportCreateInfo; // 开启调试功能
 	instInfo.flags					= 0;
 	instInfo.pApplicationInfo		= &appInfo;
 

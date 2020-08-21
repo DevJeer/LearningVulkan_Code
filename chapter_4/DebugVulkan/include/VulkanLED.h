@@ -57,6 +57,9 @@ public:
 	VkResult getDeviceExtensionProperties(VkPhysicalDevice* gpu);
 
 	/******* VULKAN DEBUGGING MEMBER FUNCTION AND VARAIBLES *******/
+	// debug信息都会传递给instance来执行启动操作
+
+	// 判断是否支持层
 	VkBool32 areLayersSupported(std::vector<const char *> &layerNames);
 	VkResult createDebugReportCallback();
 	void	destroyDebugReportCallback();

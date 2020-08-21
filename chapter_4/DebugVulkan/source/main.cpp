@@ -31,6 +31,7 @@ std::vector<const char *> instanceExtensionNames = {
 	VK_EXT_DEBUG_REPORT_EXTENSION_NAME,
 };
 
+// 需要开启的验证层
 std::vector<const char *> layerNames = {
 	"VK_LAYER_GOOGLE_threading",     
 	"VK_LAYER_LUNARG_parameter_validation",

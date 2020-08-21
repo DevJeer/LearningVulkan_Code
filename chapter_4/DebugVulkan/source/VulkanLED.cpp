@@ -156,6 +156,7 @@ void VulkanLayerAndExtension::destroyDebugReportCallback()
 {
 	VulkanApplication* appObj = VulkanApplication::GetInstance();
 	VkInstance& instance	= appObj->instanceObj.instance;
+	// 删除调试对象
 	dbgDestroyDebugReportCallback(instance, debugReportCallback, NULL);
 }
 
@@ -213,6 +214,7 @@ VkBool32 VulkanLayerAndExtension::areLayersSupported(std::vector<const char *> &
 		}
 	}
 
+	// 将不支持的层从layerNames中erase掉
 	for (auto i : unsupportLayerNames) {
 		auto it = std::find(layerNames.begin(), layerNames.end(), i);
 		if (it != layerNames.end()) layerNames.erase(it);
@@ -222,7 +224,7 @@ VkBool32 VulkanLayerAndExtension::areLayersSupported(std::vector<const char *> &
 }
 
 
-
+// 创建DebugCallback
 VkResult VulkanLayerAndExtension::createDebugReportCallback()
 {
 	VkResult result;
@@ -231,6 +233,7 @@ VkResult VulkanLayerAndExtension::createDebugReportCallback()
 	VkInstance* instance		= &appObj->instanceObj.instance;
 
 	// Get vkCreateDebugReportCallbackEXT API
+	// 获取vkCreateDebugReportCallbackEXT函数指针
 	dbgCreateDebugReportCallback = (PFN_vkCreateDebugReportCallbackEXT)vkGetInstanceProcAddr(*instance, "vkCreateDebugReportCallbackEXT");
 	if (!dbgCreateDebugReportCallback) {
 		std::cout << "Error: GetInstanceProcAddr unable to locate vkCreateDebugReportCallbackEXT function." << std::endl;
@@ -239,6 +242,7 @@ VkResult VulkanLayerAndExtension::createDebugReportCallback()
 	std::cout << "GetInstanceProcAddr loaded dbgCreateDebugReportCallback function\n";
 
 	// Get vkDestroyDebugReportCallbackEXT API
+	// 获取vkDestroyDebugReportCallbackEXT函数指针
 	dbgDestroyDebugReportCallback = (PFN_vkDestroyDebugReportCallbackEXT)vkGetInstanceProcAddr(*instance, "vkDestroyDebugReportCallbackEXT");
 	if (!dbgDestroyDebugReportCallback) {
 		std::cout << "Error: GetInstanceProcAddr unable to locate vkDestroyDebugReportCallbackEXT function." << std::endl;
@@ -248,8 +252,9 @@ VkResult VulkanLayerAndExtension::createDebugReportCallback()
 
 	// Define the debug report control structure, provide the reference of 'debugFunction'
 	// , this function prints the debug information on the console.
+	// 指定调试的具体行为模式
 	dbgReportCreateInfo.sType		= VK_STRUCTURE_TYPE_DEBUG_REPORT_CREATE_INFO_EXT;
-	dbgReportCreateInfo.pfnCallback = debugFunction;
+	dbgReportCreateInfo.pfnCallback = debugFunction;  // 用来过滤和显示调试信息的回调函数
 	dbgReportCreateInfo.pUserData	= NULL;
 	dbgReportCreateInfo.pNext		= NULL;
 	dbgReportCreateInfo.flags		= VK_DEBUG_REPORT_WARNING_BIT_EXT |
