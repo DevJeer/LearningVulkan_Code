@@ -30,8 +30,15 @@
 class CommandBufferMgr
 {
 public:
+	// 从command pool 分配指令到command buffer
 	static void allocCommandBuffer(const VkDevice* device, const VkCommandPool cmdPool, VkCommandBuffer* cmdBuf, const VkCommandBufferAllocateInfo* commandBufferInfo = NULL);
+	
+	// 开始command buffer录制
 	static void beginCommandBuffer(VkCommandBuffer cmdBuf, VkCommandBufferBeginInfo* inCmdBufInfo = NULL);
+
+	// 结束command buffer录制
 	static void endCommandBuffer(VkCommandBuffer cmdBuf);
+
+	// 将command buffer提交到执行部分
 	static void submitCommandBuffer(const VkQueue& queue, const VkCommandBuffer* cmdBufList, const VkSubmitInfo* submitInfo = NULL, const VkFence& fence = VK_NULL_HANDLE);
 };

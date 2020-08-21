@@ -31,6 +31,7 @@ void CommandBufferMgr::allocCommandBuffer(const VkDevice* device, const VkComman
 	VkResult result;
 
 	// If command information is available use it as it is.
+	// 如果缓存的数据可用的话
 	if (commandBufferInfo) {
 		result = vkAllocateCommandBuffers(*device, commandBufferInfo, cmdBuf);
 		assert(!result);
@@ -39,6 +40,7 @@ void CommandBufferMgr::allocCommandBuffer(const VkDevice* device, const VkComman
 
 	// Default implementation, create the command buffer
 	// allocation info and use the supplied parameter into it
+	// 创建 allocation info,并且传递参数
 	VkCommandBufferAllocateInfo cmdInfo = {};
 	cmdInfo.sType		= VK_STRUCTURE_TYPE_COMMAND_BUFFER_ALLOCATE_INFO;
 	cmdInfo.pNext		= NULL;
@@ -46,6 +48,7 @@ void CommandBufferMgr::allocCommandBuffer(const VkDevice* device, const VkComman
 	cmdInfo.level		= VK_COMMAND_BUFFER_LEVEL_PRIMARY;
 	cmdInfo.commandBufferCount = (uint32_t) sizeof(cmdBuf) / sizeof(VkCommandBuffer);;
 
+	//分配内存空间
 	result = vkAllocateCommandBuffers(*device, &cmdInfo, cmdBuf);
 	assert(!result);
 }
@@ -55,6 +58,7 @@ void CommandBufferMgr::beginCommandBuffer(VkCommandBuffer cmdBuf, VkCommandBuffe
 	// Dependency on  the initialieCommandBuffer()
 	VkResult  result;
 	// If the user has specified the custom command buffer use it
+	// 如果用户指定了自定义的指令缓存，就用用户自定义的
 	if (inCmdBufInfo) {
 		result = vkBeginCommandBuffer(cmdBuf, inCmdBufInfo);
 		assert(result == VK_SUCCESS);
@@ -62,6 +66,7 @@ void CommandBufferMgr::beginCommandBuffer(VkCommandBuffer cmdBuf, VkCommandBuffe
 	}
 
 	// Otherwise, use the default implementation.
+	// 否则，使用默认的方案
 	VkCommandBufferInheritanceInfo cmdBufInheritInfo = {};
 	cmdBufInheritInfo.sType					= VK_STRUCTURE_TYPE_COMMAND_BUFFER_INHERITANCE_INFO;
 	cmdBufInheritInfo.pNext					= NULL;
@@ -85,6 +90,7 @@ void CommandBufferMgr::beginCommandBuffer(VkCommandBuffer cmdBuf, VkCommandBuffe
 
 void CommandBufferMgr::endCommandBuffer(VkCommandBuffer commandBuffer)
 {
+	// command buffer录制结束之后
 	VkResult  result;
 	result = vkEndCommandBuffer(commandBuffer);
 	assert(result == VK_SUCCESS);
@@ -96,6 +102,8 @@ void CommandBufferMgr::submitCommandBuffer(const VkQueue& queue, const VkCommand
 	
 	// If Subimt information is avialable use it as it is, this assumes that 
 	// the commands are already specified in the structure, hence ignore command buffer 
+	// 如果提交信息可用的话，那么假设command buffer已经在结构体内了，
+	// 因此，忽略掉command buffer
 	if (inSubmitInfo){
 		result = vkQueueSubmit(queue, 1, inSubmitInfo, fence);
 		assert(!result);
@@ -120,6 +128,7 @@ void CommandBufferMgr::submitCommandBuffer(const VkQueue& queue, const VkCommand
 	result = vkQueueSubmit(queue, 1, &submitInfo, fence);
 	assert(!result);
 
+	// waitting
 	result = vkQueueWaitIdle(queue);
 	assert(!result);
 

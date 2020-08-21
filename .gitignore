@@ -352,3 +352,5 @@ chapter_3/HandShake/build/
 chapter_3/HandShake/binaries/3_0_DeviceHandshake.exe
 chapter_4/DebugVulkan/build/
 chapter_4/DebugVulkan/binaries/4_0_DebugVulkan.exe
+chapter_5/CommandBuffer/build/
+chapter_5/CommandBuffer/binaries/5_0_CommandBuffer.exe
