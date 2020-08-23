@@ -41,26 +41,33 @@ struct SwapChainBuffer{
 struct SwapChainPrivateVariables
 {
 	// Store the image surface capabilities
+	// 保存image surface属性
 	VkSurfaceCapabilitiesKHR	surfCapabilities;				
 
 	// Stores the number of present mode support by the implementation
+	// 保存了 present mode number
 	uint32_t					presentModeCount;
 
 	// Arrays for retrived present modes
+	// present modes array
 	std::vector<VkPresentModeKHR> presentModes;
 
 	// Size of the swap chain color images
+	// swap chain color image 的大小
 	VkExtent2D					swapChainExtent;
 
 	// Number of color images supported by the implementation
+	// 可用的 color image 的数量
 	uint32_t					desiredNumberOfSwapChainImages;
 
 	VkSurfaceTransformFlagBitsKHR preTransform;
 
 	// Stores present mode bitwise flag for the creation of swap chain
+	// 保存了swap chain创建对应的present mode
 	VkPresentModeKHR			swapchainPresentMode;
 
 	// The retrived drawing color swap chain images
+	// 获取到的swap chain images
 	std::vector<VkImage>		swapchainImages;
 
 	std::vector<VkSurfaceFormatKHR> surfFormats;
@@ -69,24 +76,31 @@ struct SwapChainPrivateVariables
 struct SwapChainPublicVariables
 {
 	// The logical platform dependent surface object
+	// 系统平台相关的surface object
 	VkSurfaceKHR surface;
 
 	// Number of buffer image used for swap chain
+	// swap chain 用到的 buffer image 的数量
 	uint32_t swapchainImageCount;
 
 	// Swap chain object
+	// swap chain 对象
 	VkSwapchainKHR swapChain;
 
 	// List of color swap chain images
+	// swap chain 对象列表
 	std::vector<SwapChainBuffer> colorBuffer;
 
 	// Semaphore for sync purpose
+	// 同步对象的信号
 	VkSemaphore presentCompleteSemaphore;
 
 	// Current drawing surface index in use
+	// 当前使用的drawing surface 索引
 	uint32_t currentColorBuffer;
 
 	// Format of the image 
+	// image的format
 	VkFormat format;
 };
 

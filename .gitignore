@@ -354,3 +354,5 @@ chapter_4/DebugVulkan/build/
 chapter_4/DebugVulkan/binaries/4_0_DebugVulkan.exe
 chapter_5/CommandBuffer/build/
 chapter_5/CommandBuffer/binaries/5_0_CommandBuffer.exe
+chapter_6/SwapChain/build/
+chapter_6/SwapChain/binaries/6_0_SwapChain.exe

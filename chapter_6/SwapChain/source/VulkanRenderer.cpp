@@ -51,15 +51,19 @@ VulkanRenderer::~VulkanRenderer()
 void VulkanRenderer::initialize()
 {
 	// Create an empy window 500x500
+	// 创建一个空的 500 * 500像素的窗口
 	createPresentationWindow(500, 500); 
 							
 	// Initialize swapchain
+	// 初始化swapchain
 	swapChainObj->intializeSwapChain();
 
 	// We need command buffers, so create a command buffer pool
+	// 创建command pool 
 	createCommandPool();
 	
 	// Let's create the swap chain color images and depth image
+	// 创建swap chain的颜色和深度图
 	buildSwapChainAndDepthImage();
 }
 
@@ -67,6 +71,7 @@ bool VulkanRenderer::render()
 {
 	MSG msg;   // message
 	PeekMessage(&msg, NULL, 0, 0, PM_REMOVE);
+	// 如果接收到退出消息，就会返回fasle
 	if (msg.message == WM_QUIT) {
 		return false;
 	}
@@ -79,12 +84,13 @@ bool VulkanRenderer::render()
 #ifdef _WIN32
 
 // MS-Windows event handling function:
+// MS-Windows 窗口回调函数
 LRESULT CALLBACK VulkanRenderer::WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
 	VulkanApplication* appObj = VulkanApplication::GetInstance();
 	switch (uMsg)
 	{
-	case WM_CLOSE:
+	case WM_CLOSE: //目前只考虑窗口关闭的事件
 		PostQuitMessage(0);
 		break;
 	default:
@@ -93,6 +99,7 @@ LRESULT CALLBACK VulkanRenderer::WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LP
 	return (DefWindowProc(hWnd, uMsg, wParam, lParam));
 }
 
+// 创建window
 void VulkanRenderer::createPresentationWindow(const int& windowWidth, const int& windowHeight)
 {
 #ifdef _WIN32
@@ -105,6 +112,7 @@ void VulkanRenderer::createPresentationWindow(const int& windowWidth, const int&
 	sprintf(name, "Swapchain presentation window");
 	memset(&winInfo, 0, sizeof(WNDCLASSEX));
 	// Initialize the window class structure:
+	// 初始化窗口类的结构体
 	winInfo.cbSize			= sizeof(WNDCLASSEX);
 	winInfo.style			= CS_HREDRAW | CS_VREDRAW;
 	winInfo.lpfnWndProc		= WndProc;
@@ -119,6 +127,7 @@ void VulkanRenderer::createPresentationWindow(const int& windowWidth, const int&
 	winInfo.hIconSm			= LoadIcon(NULL, IDI_WINLOGO);
 
 	// Register window class:
+	// 注册窗口类
 	if (!RegisterClassEx(&winInfo)) {
 		// It didn't work, so try to give a useful error:
 		printf("Unexpected error trying to start the application!\n");
@@ -127,6 +136,7 @@ void VulkanRenderer::createPresentationWindow(const int& windowWidth, const int&
 	}
 	
 	// Create window with the registered class:
+	// 用注册的窗口类来创建窗口
 	RECT wr = { 0, 0, width, height };
 	AdjustWindowRect(&wr, WS_OVERLAPPEDWINDOW, FALSE);
 	window = CreateWindowEx(0,
@@ -224,6 +234,7 @@ void VulkanRenderer::destroyWindow()
 
 #endif // _WIN32
 
+// 创建command pool
 void VulkanRenderer::createCommandPool()
 {
 	VulkanDevice* deviceObj		= application->deviceObj;
@@ -373,12 +384,15 @@ void VulkanRenderer::destroyCommandPool()
 void VulkanRenderer::buildSwapChainAndDepthImage()
 {
 	// Get the appropriate queue to submit the command into
+	// 获取合适的队列
 	deviceObj->getDeviceQueue();
 
 	// Create swapchain and get the color image
+	// 创建swap chain并且得到 color image 
 	swapChainObj->createSwapChain(cmdDepthImage);
 	
 	// Create the depth image
+	// 创建 depth image
 	createDepthImage();
 }
 
