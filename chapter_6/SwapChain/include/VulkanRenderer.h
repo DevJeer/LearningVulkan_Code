@@ -46,10 +46,12 @@ public:
 	bool render();
 
 	// Create an empty window
+	// 创建空白窗口
 	void createPresentationWindow(const int& windowWidth = 500, const int& windowHeight = 500);
 	void setImageLayout(VkImage image, VkImageAspectFlags aspectMask, VkImageLayout oldImageLayout, VkImageLayout newImageLayout, VkAccessFlagBits srcAccessMask, const VkCommandBuffer& cmdBuf);
 
 	//! Windows procedure method for handling events.
+	// 处理窗口事件的windows回调函数
 	static LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 
 	// Destroy the presentation window
@@ -60,8 +62,11 @@ public:
 	inline VulkanDevice*  getDevice()				{ return deviceObj; }
 	inline VulkanSwapChain*  getSwapChain() 		{ return swapChainObj; }
 
+	// 创建Command Pool
 	void createCommandPool();							// Create command pool
+	// 创建swapchain颜色和深度图
 	void buildSwapChainAndDepthImage();					// Create swapchain color image and depth image
+	// 创建深度图
 	void createDepthImage();							// Create depth image
 
 	void destroyCommandBuffer();
@@ -71,8 +76,11 @@ public:
 public:
 #ifdef _WIN32
 #define APP_NAME_STR_LEN 80
+	// hInstance - Windows 实例
 	HINSTANCE					connection;				// hInstance - Windows Instance
+	// name - 窗口显示的应用程序名称
 	char						name[APP_NAME_STR_LEN]; // name - App name appearing on the window
+	// hWnd - 窗口的句柄
 	HWND						window;					// hWnd - the window handle
 #else
 	xcb_connection_t*			connection;
@@ -81,6 +89,7 @@ public:
 	xcb_intern_atom_reply_t*	reply;
 #endif
 
+	// 深度图像的数据结构
 	struct{
 		VkFormat		format;
 		VkImage			image;
@@ -88,9 +97,12 @@ public:
 		VkImageView		view;
 	}Depth;
 
+	// 深度图的 command buffer
 	VkCommandBuffer		cmdDepthImage;	// Command buffer for depth image layout
+	// command pool
 	VkCommandPool		cmdPool;		// Command pool
 
+	// 窗口宽度和高度
 	int					width, height;
 
 private:

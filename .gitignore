@@ -354,13 +354,7 @@ chapter_4/DebugVulkan/build/
 chapter_4/DebugVulkan/binaries/4_0_DebugVulkan.exe
 chapter_5/CommandBuffer/build/
 chapter_5/CommandBuffer/binaries/5_0_CommandBuffer.exe
-chapter_10/10a_Uniforms_And_Descriptors/build/CMakeFiles/3.18.0-rc2/CMakeCCompiler.cmake
-chapter_10/10a_Uniforms_And_Descriptors/build/CMakeFiles/3.18.0-rc2/CompilerIdC/CompilerIdC.exe
-chapter_10/10a_Uniforms_And_Descriptors/build/
-chapter_6/SwapChain/build/
-chapter_7/7d_ClearingBackground/build/
-chapter_9/9a_DrawingHelloWorld/build/
-chapter_6/SwapChain/binaries/6_0_SwapChain.exe
-chapter_10/10a_Uniforms_And_Descriptors/binaries/10a_Uniforms_And_Descriptors.exe
-chapter_9/9a_DrawingHelloWorld/binaries/9a_DrawingHelloworld.exe
-chapter_7/7d_ClearingBackground/binaries/7d_ClearingBackground.exe
+chapter_10/
+chapter_6/
+chapter_7/
+chapter_9/

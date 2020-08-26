@@ -30,6 +30,7 @@
 #include "VulkanRenderer.h"
 #include "VulkanApplication.h"
 
+// 查询instacne相关的信息
 #define INSTANCE_FUNC_PTR(instance, entrypoint){											\
     fp##entrypoint = (PFN_vk##entrypoint) vkGetInstanceProcAddr(instance, "vk"#entrypoint); \
     if (fp##entrypoint == NULL) {															\
@@ -38,6 +39,7 @@
     }																						\
 }
 
+// 查询设备扩展相关的信息
 #define DEVICE_FUNC_PTR(dev, entrypoint){													\
     fp##entrypoint = (PFN_vk##entrypoint) vkGetDeviceProcAddr(dev, "vk"#entrypoint);		\
     if (fp##entrypoint == NULL) {															\
@@ -59,6 +61,7 @@ VulkanSwapChain::~VulkanSwapChain()
 	scPrivateVars.presentModes.clear();
 }
 
+// 创建swapchain 相关的扩展
 VkResult VulkanSwapChain::createSwapChainExtensions()
 {
 	// Dependency on createPresentationWindow()
@@ -66,6 +69,7 @@ VkResult VulkanSwapChain::createSwapChainExtensions()
 	VkDevice& device		= appObj->deviceObj->device;
 
 	// Get Instance based swap chain extension function pointer
+	// 获取基于实例 swap chain扩展相关的函数指针
 	INSTANCE_FUNC_PTR(instance, GetPhysicalDeviceSurfaceSupportKHR);
 	INSTANCE_FUNC_PTR(instance, GetPhysicalDeviceSurfaceCapabilitiesKHR);
 	INSTANCE_FUNC_PTR(instance, GetPhysicalDeviceSurfaceFormatsKHR);
@@ -73,6 +77,7 @@ VkResult VulkanSwapChain::createSwapChainExtensions()
 	INSTANCE_FUNC_PTR(instance, DestroySurfaceKHR);
 
 	// Get Device based swap chain extension function pointer
+	// 获取基于设备 swap chain扩展相关的函数指针
 	DEVICE_FUNC_PTR(device, CreateSwapchainKHR);
 	DEVICE_FUNC_PTR(device, DestroySwapchainKHR);
 	DEVICE_FUNC_PTR(device, GetSwapchainImagesKHR);
@@ -82,13 +87,16 @@ VkResult VulkanSwapChain::createSwapChainExtensions()
 	return VK_SUCCESS;
 }
 
+// 创建surface
 VkResult VulkanSwapChain::createSurface()
 {
 	VkResult  result;
 	// Depends on createPresentationWindow(), need an empty window handle
+	// 依赖createPresentationWindow ， 需要一个空的window handle
 	VkInstance& instance = appObj->instanceObj.instance;
 
 	// Construct the surface description:
+	// 创建surface的描述信息
 #ifdef _WIN32
 	VkWin32SurfaceCreateInfoKHR createInfo = {};
 	createInfo.sType		= VK_STRUCTURE_TYPE_WIN32_SURFACE_CREATE_INFO_KHR;
@@ -113,6 +121,7 @@ VkResult VulkanSwapChain::createSurface()
 	return result;
 }
 
+// 查询支持图形绘制与展示的queue
 uint32_t VulkanSwapChain::getGraphicsQueueWithPresentationSupport()
 {
 	VulkanDevice* device	= appObj->deviceObj;
@@ -121,6 +130,7 @@ uint32_t VulkanSwapChain::getGraphicsQueueWithPresentationSupport()
 	std::vector<VkQueueFamilyProperties>& queueProps = device->queueFamilyProps;
 
 	// Iterate over each queue and get presentation status for each.
+	// 迭代每个队列 并且 获取展示状态的属性
 	VkBool32* supportsPresent = (VkBool32 *)malloc(queueCount * sizeof(VkBool32));
 	for (uint32_t i = 0; i < queueCount; i++) {
 		fpGetPhysicalDeviceSurfaceSupportKHR(gpu, i, scPublicVars.surface, &supportsPresent[i]);
@@ -128,6 +138,7 @@ uint32_t VulkanSwapChain::getGraphicsQueueWithPresentationSupport()
 
 	 // Search for a graphics queue and a present queue in the array of queue
 	 // families, try to find one that supports both
+	// 检查图形队列是否支持扩展功能
 	uint32_t graphicsQueueNodeIndex = UINT32_MAX;
 	uint32_t presentQueueNodeIndex = UINT32_MAX;
 	for (uint32_t i = 0; i < queueCount; i++) {
@@ -147,6 +158,8 @@ uint32_t VulkanSwapChain::getGraphicsQueueWithPresentationSupport()
 	if (presentQueueNodeIndex == UINT32_MAX) {
 		// If didn't find a queue that supports both graphics and present, then
 		// find a separate present queue.
+		// 如果没有找到同时支持图形和展示的队列
+		// 那么单独寻找展示的队列
 		for (uint32_t i = 0; i < queueCount; ++i) {
 			if (supportsPresent[i] == VK_TRUE) {
 				presentQueueNodeIndex = i;
@@ -158,6 +171,7 @@ uint32_t VulkanSwapChain::getGraphicsQueueWithPresentationSupport()
 	free(supportsPresent);
 
 	// Generate error if could not find both a graphics and a present queue
+	// 如果没有找到展示队列则提示出错
 	if (graphicsQueueNodeIndex == UINT32_MAX || presentQueueNodeIndex == UINT32_MAX) {
 		return  UINT32_MAX;
 	}
