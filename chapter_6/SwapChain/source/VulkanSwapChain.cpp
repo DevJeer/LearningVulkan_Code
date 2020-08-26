@@ -75,15 +75,17 @@ VkResult VulkanSwapChain::createSwapChainExtensions()
 	INSTANCE_FUNC_PTR(instance, GetPhysicalDeviceSurfaceFormatsKHR);
 	INSTANCE_FUNC_PTR(instance, GetPhysicalDeviceSurfacePresentModesKHR);
 	INSTANCE_FUNC_PTR(instance, DestroySurfaceKHR);
+	//fpDestroySurfaceKHR = (PFN_vkDestroySurfaceKHR)vkGetInstanceProcAddr(instance, "vkDestroySurfaceKHR");
 
 	// Get Device based swap chain extension function pointer
 	// 获取基于设备 swap chain扩展相关的函数指针
 	DEVICE_FUNC_PTR(device, CreateSwapchainKHR);
+	//fpCreateSwapchainKHR = (PFN_vkCreateSwapchainKHR)vkGetDeviceProcAddr(device, "vkCreateSwapchainKHR");
 	DEVICE_FUNC_PTR(device, DestroySwapchainKHR);
 	DEVICE_FUNC_PTR(device, GetSwapchainImagesKHR);
 	DEVICE_FUNC_PTR(device, AcquireNextImageKHR);
 	DEVICE_FUNC_PTR(device, QueuePresentKHR);
-
+	//fpQueuePresentKHR = (PFN_vkQueuePresentKHR)vkGetDeviceProcAddr(device, "vkQueuePresentKHR");
 	return VK_SUCCESS;
 }
 
