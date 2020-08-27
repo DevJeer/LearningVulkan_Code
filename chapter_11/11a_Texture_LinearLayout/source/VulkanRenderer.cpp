@@ -409,7 +409,8 @@ void VulkanRenderer::createDepthImage()
 void VulkanRenderer::createTextureLinear(const char* filename, TextureData *texture, VkImageUsageFlags imageUsageFlags, VkFormat format)
 {
 	// Load the image 
-	gli::texture2D image2D(gli::load(filename)); assert(!image2D.empty());
+	gli::texture2D image2D(gli::load(filename)); 
+	assert(!image2D.empty());
 
 	// Get the image dimensions
 	texture->textureWidth	= uint32_t(image2D[0].dimensions().x);

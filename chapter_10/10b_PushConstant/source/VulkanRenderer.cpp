@@ -631,8 +631,8 @@ void VulkanRenderer::createPushConstants()
 		MIXED_COLOR = 4,
 	};
 
-	float mixerValue			= 0.3f;
-	unsigned constColorRGBFlag	= BLUE;
+	float mixerValue			= 0.5f;
+	unsigned constColorRGBFlag	= MIXED_COLOR;
 	
 	// Create push constant data, this contain a constant
 	// color flag and mixer value for non-const color

@@ -25,9 +25,11 @@
 
 #version 450
 
-layout (std140, binding = 0) uniform bufferVals {	// UNIFORM_BLOCK_BINDING_INDEX
+layout (std140, binding = 0) uniform 
+bufferVals {	// UNIFORM_BLOCK_BINDING_INDEX
     mat4 mvp;
-} myBufferVals;
+} 
+myBufferVals;
 
 layout (location = 0) in vec4 pos;
 layout (location = 1) in vec4 inColor;
