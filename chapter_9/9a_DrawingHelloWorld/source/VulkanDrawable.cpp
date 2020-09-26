@@ -183,9 +183,9 @@ void VulkanDrawable::recordCommandBuffer(int currentImage, VkCommandBuffer* cmdD
 	VulkanDevice* deviceObj			= rendererObj->getDevice();
 	// Specify the clear color value
 	VkClearValue clearValues[2];
-	clearValues[0].color.float32[0]		= 0.0f;
-	clearValues[0].color.float32[1]		= 0.0f;
-	clearValues[0].color.float32[2]		= 0.0f;
+	clearValues[0].color.float32[0]		= 1.0f;
+	clearValues[0].color.float32[1]		= 0.714f;
+	clearValues[0].color.float32[2]		= 0.757f;
 	clearValues[0].color.float32[3]		= 0.0f;
 
 	// Specify the depth/stencil clear value
